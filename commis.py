@@ -7,8 +7,9 @@ class Commis(threading.Thread, ABC):
     Chaque commis est un thread qui exécute une tâche spécifique
     (battre des œufs, fondre du chocolat, etc.)
     """
-    def __init__(self):
+    def __init__(self, name):
         super().__init__()
+        self.name = name
 
     @abstractmethod
     def run(self):
@@ -17,4 +18,5 @@ class Commis(threading.Thread, ABC):
         Elle contient la logique de la tâche à exécuter.
         """
         pass
+
 
