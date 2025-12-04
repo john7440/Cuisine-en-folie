@@ -1,5 +1,6 @@
+from abc import ABC
 
-class Ingredient():
+class Ingredient(ABC):
     def __init__(self, name, quantity, unit):
         self.name = name
         self.quantity = quantity
@@ -9,6 +10,6 @@ class Oeuf(Ingredient):
     def __init__(self, name, quantity, unit):
         Ingredient.__init__(self, name, quantity, unit)
 
-class Chocolate(Ingredient):
+class Chocolat(Ingredient):
     def __init__(self, name, quantity, unit):
         Ingredient.__init__(self, name, quantity, unit)
