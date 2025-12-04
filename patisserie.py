@@ -1,6 +1,7 @@
 import threading
 import time
 import math
+import ingredient, recipient, appareil
 
 
 class BatteurOeufs(threading.Thread):
@@ -36,9 +37,11 @@ class FondeurChocolat(threading.Thread):
             time.sleep(1)  # temps supposé d'un tour de spatule
 
 
+
 if __name__ == "__main__":
     batteur = BatteurOeufs(6)
     fondeur = FondeurChocolat(200)
+    fondeur2 = FondeurChocolat(200)
     batteur.start()
     fondeur.start()
     batteur.join()
