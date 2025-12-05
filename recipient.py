@@ -13,15 +13,15 @@ class Recipient:
         if self.content is None:
             return f"Recipient {self.name} est vide!"
         else:
-            return f"Recipient {self.name} contient: {self.content}"
+            return f"{self.content}"
 
     def add_content(self, ingredient: Ingredient):
-        #On ajoute un ingrédient en fusionnant si nécessaire
+        #On ajoute un ingrédient au récipient vide
         if self.content is None:
             self.content = ingredient
+        #contiens deja un ingrédient
         elif isinstance(self.content, Ingredient):
             self.content = self.content.merge(ingredient)
+        #si contiens deja un appareil
         elif isinstance(self.content, Appareil):
             self.content.ingredients.append(ingredient)
-        else:
-            self.content = ingredient
