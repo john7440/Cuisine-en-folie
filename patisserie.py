@@ -6,7 +6,6 @@ from ingredient import Chocolat, Oeuf
 from recipient import Recipient
 from verseur import Verseur
 
-
 class BatteurOeufs(Commis):
     def __init__(self, recipient: Recipient, nb_oeufs, name):
         super().__init__(name)
@@ -17,9 +16,8 @@ class BatteurOeufs(Commis):
         # on suppose qu'il faut 8 tours de batteur par œuf présent dans le bol
         nb_tours = self.nb_oeufs * 8
         for no_tour in range(1, nb_tours + 1):
-            print(f"\tJe bats les {self.nb_oeufs} oeufs, tour n°{no_tour}")
+            print(f"{self.name}:Je bats les {self.nb_oeufs} oeufs, tour n°{no_tour}")
             time.sleep(0.5)  # temps supposé d'un tour de batteur
-
 
 class FondeurChocolat(Commis):
     lock = threading.Lock()
@@ -46,31 +44,32 @@ class FondeurChocolat(Commis):
             print(f"{self.name}: Chocolat fondu terminé dans {self.recipient.name}\n")
 
 def main():
-    # récipients
+    # Récipients
     culdepoule = Recipient(name="Cul de poule en inox", content=Oeuf(6))
-    bol_chocolat = Recipient(name="Bol en verre", content=Chocolat(200))
-    moule = Recipient(name="Moule à cake")
+    bol_chocolat1 = Recipient(name="Bol en verre", content=Chocolat(200))
+    bol_chocolat2 = Recipient(name="Bol en inox", content=Chocolat(150))
+    moule = Recipient(name="Moule en papier maché")
 
-    # commis
+    # Commis
     batteur = BatteurOeufs(culdepoule, nb_oeufs=6, name="Hannibale")
-    fondeur1 = FondeurChocolat(bol_chocolat, quantite=250, name="Casimir")
-    fondeur2 = FondeurChocolat(bol_chocolat, quantite=200, name="Tartenpion")
+    fondeur1 = FondeurChocolat(bol_chocolat1, quantite=200, name="Casimir")
+    fondeur2 = FondeurChocolat(bol_chocolat2, quantite=150, name="Tartenpion")
 
-    #LE lancement des commis en parallèle
+    # Lancement en parallèle
     batteur.start()
     fondeur1.start()
     fondeur2.start()
 
-    # Attente de la fin des tâches
     batteur.join()
     fondeur1.join()
     fondeur2.join()
 
-    print("\nLes oeufs sont battus et le chocolat est fondu.")
-    print("Je peux à présent incorporer le chocolat aux oeufs.\n")
+    print("\nLes oeufs sont battus et les deux bols de chocolat sont fondus")
+    print("On peut maintenant incorporer le chocolat aux oeufs\n")
 
-    verseur1 = Verseur(bol_chocolat, culdepoule, portions=3, name="Pignouf", tempo=0.5)
-    verseur2 = Verseur(bol_chocolat, culdepoule, portions=3, name="Rantanplan", tempo=0.5)
+    #les verseurs en simultané
+    verseur1 = Verseur(bol_chocolat1, culdepoule, portions=3, name="Pignouf", tempo=0.5)
+    verseur2 = Verseur(bol_chocolat2, culdepoule, portions=3, name="HarryPotter", tempo=0.5)
 
     verseur1.start()
     verseur2.start()
@@ -78,10 +77,9 @@ def main():
     verseur1.join()
     verseur2.join()
 
-    print("\nLe mélange oeufs + chocolat est prêt.")
-    print("Je peux maintenant le transvaser dans le moule.\n")
+    print("\nLe mélange oeufs + chocolat est prêt!")
+    print("On peut maintenant le transvaser dans le moule\n")
 
-    # Verseur final pour mettre l'appareil dans le moule
     verseur_final = Verseur(culdepoule, moule, portions=4, name="Patatrack", tempo=0.7)
     verseur_final.start()
     verseur_final.join()
