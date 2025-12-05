@@ -14,8 +14,7 @@ class Commis(threading.Thread, ABC):
     @abstractmethod
     def run(self):
         """
-        Méthode abstraite que chaque commis doit implémenter.
-        Elle contient la logique de la tâche à exécuter.
+        Méthode abstraite qui contient la logique de la tâche à exécuter
         """
         pass
 
